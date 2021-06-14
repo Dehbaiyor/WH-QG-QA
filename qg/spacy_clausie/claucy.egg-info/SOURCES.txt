@@ -1,0 +1,14 @@
+README.md
+setup.py
+claucy/__init__.py
+claucy/claucy.py
+claucy.egg-info/PKG-INFO
+claucy.egg-info/SOURCES.txt
+claucy.egg-info/dependency_links.txt
+claucy.egg-info/requires.txt
+claucy.egg-info/top_level.txt
+clausiepy/__init__.py
+clausiepy/clausiepy.py
+clausiepy/util.py
+tests/__init__.py
+tests/claucy_test.py

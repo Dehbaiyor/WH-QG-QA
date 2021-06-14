@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: claucy
+Version: 0.0.1.991
+Summary: A reimplementation of ClausIE Information Extraction System in python
+Home-page: https://github.com/mmxgn/spacy-clausie
+Author: Emmanouil Theofanis Chourdakis
+Author-email: etchourdakis@gmail.com
+License: UNKNOWN
+Description: UNKNOWN
+Keywords: openie clausie information extraction spacy
+Platform: UNKNOWN
