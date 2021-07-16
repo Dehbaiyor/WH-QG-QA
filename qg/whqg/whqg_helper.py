@@ -8,21 +8,9 @@ with warnings.catch_warnings():
     import nltk
     from nltk import sent_tokenize,word_tokenize
     import numpy as np
-    #import neuralcoref
-    #import stanza
     from qg.spacy_clausie import claucy #import claucy
     from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, pipeline, AutoModelWithLMHead
     import random
-   # from transformers import pipeline #AutoModelWithLMHead, AutoTokenizer, pipeline
-
-    #tokenizer_p = AutoTokenizer.from_pretrained("Vamsi/T5_Paraphrase_Paws")  
-    #model_p = AutoModelForSeq2SeqLM.from_pretrained("Vamsi/T5_Paraphrase_Paws")
-#    summarizer = pipeline("summarization")
-
-#def summarize(sentence):
-#    length = len(sentence.split())
-#    return summarizer(sentence, max_length = int(0.95 * length), min_length = int(0.8 * length), do_sample=False)[0]['summary_text']
-
 
 def paraphrase(s):
     text =  "paraphrase: " + s + " </s>"
@@ -49,13 +37,6 @@ def paraphrase(s):
     #print(line)
     return line
 
-#summarizer = pipeline("summarization")
-#nltk.download('punkt')
-#nlp = spacy.load('en_core_web_lg')
-#claucy.add_to_pipe(nlp)
-#neuralcoref.add_to_pipe(nlp)
-#claucy.add_to_pipe(nlp) 
-
 try:
     nlp = spacy.load("en_core_web_lg")
 except:
@@ -64,11 +45,8 @@ except:
     except:
         nlp =  spacy.load("en_core_web_sm")
         
-#neuralcoref.add_to_pipe(nlp)
-
 tokenizer_t = AutoTokenizer.from_pretrained('./qg/finetuned_qg_model/')
 model_t = AutoModelWithLMHead.from_pretrained('./qg/finetuned_qg_model/')
-#hf = pipeline("ner", grouped_entities=True)
 
 def extract_ner_hf(txt):
     result = hf(txt)
@@ -84,20 +62,14 @@ def get_sentences(txt):
 def get_ents(txt):
     ents1 = {}
     doc = get_doc(txt)
-    #txt = doc._.coref_resolved
     sentences = get_sentences(txt)
     
     for ent in doc.ents:
         ents1[ent.text] = ent.label_
     
-    #nlp2 = stanza.Pipeline(lang='en', processors='tokenize,ner')
     ents2 = {}
-    #doc2 = nlp2(txt)  
-    #for ent in doc2.ents:
-    #    ents2[ent.text] = ent.type
      
     ents3 = {}
-    #ents3 = extract_ner_hf(txt)
     
     return sentences, ents1, ents2, ents3
           
