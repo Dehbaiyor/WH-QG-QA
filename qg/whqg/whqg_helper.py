@@ -13,6 +13,9 @@ with warnings.catch_warnings():
     import random
 
 def paraphrase(s):
+    """
+    This function takes in a string and returns the paraphrase
+    """
     text =  "paraphrase: " + s + " </s>"
 
     encoding = tokenizer_p.encode_plus(text,pad_to_max_length=True, return_tensors="pt")
@@ -49,6 +52,9 @@ tokenizer_t = AutoTokenizer.from_pretrained('./qg/finetuned_qg_model/')
 model_t = AutoModelWithLMHead.from_pretrained('./qg/finetuned_qg_model/')
 
 def extract_ner_hf(txt):
+    """
+    This function takes in a string and returns the tokenized sentencs and named entities
+    """
     result = hf(txt)
     ents = {}
     for ent in result:
@@ -75,6 +81,9 @@ def get_ents(txt):
           
     
 def generate_questions_ent(txt):
+     """
+    This function takes in a string and returns questions, tokenized sentences and entities
+    """
     sentences, entities1, entities2, entities3 = get_ents(txt)
     entities = list(set(list(entities1.keys()) + list(entities2.keys()) + list(entities3.keys())))
     questions = []
@@ -98,15 +107,24 @@ def generate_questions_ent(txt):
     return questions, sentences, entities1, entities2, entities3
 
 def return_tag(sentence):
+    """
+    This function takes in a string and returns the parts of speech tags
+    """
     tokens = word_tokenize(sentence)
     tagged = nltk.pos_tag(tokens)
     return " ".join([tag[1] for tag in tagged])
 
 def get_doc(txt):
+     """
+    This function takes in a string and returns the spacy docs
+    """
     doc = nlp(txt)
     return doc
 
 def get_question(answer, context, max_length=64):
+    """
+    This function returns a question from the expected answer, context and maximum length
+    """
   input_text = "answer: %s  context: %s </s>" % (answer, context)
   features = tokenizer_t([input_text], return_tensors='pt')
 
@@ -117,6 +135,9 @@ def get_question(answer, context, max_length=64):
   return tokenizer_t.decode(output[0])
 
 def generate_questions_transformer(sentences, n):
+    """
+    This function takes in sentences and returns n questions
+    """
     qs = []
     random.seed(123)
     sentences = random.sample(sentences, n)
@@ -135,6 +156,9 @@ def generate_questions_transformer(sentences, n):
     return r_qsts
 
 def string(l):
+     """
+    This function takes in a list and returns a string
+    """
     ad = ""
     for i in l.adverbials:
         ad = ad + str(i) + " "
@@ -144,6 +168,9 @@ def string(l):
     return a
 
 def get_triples(sentences):
+    """
+    This function takes in sentences and returns the IE triples
+    """
     breakdown = []
     nlp3 = spacy.load('en_core_web_lg')
     claucy.add_to_pipe(nlp3)
@@ -155,6 +182,9 @@ def get_triples(sentences):
     return breakdown
 
 def return_questions_ie(sentences, ents, ents2, ents3):
+        """
+    This function takes in a sentences, named entities and returns generated question
+    """
     breakdown = get_triples(sentences)
     ie_data = pd.DataFrame(breakdown)[0].apply(string).str.split("~", expand = True).rename(columns={0:'type',
                                                                                           1:'subject',
@@ -162,7 +192,7 @@ def return_questions_ie(sentences, ents, ents2, ents3):
                                                                                           3:'indirect_obj',
                                                                                           4:'direct_obj',
                                                                                           5:'complement',
-                                                                                          6:'adverbials'})
+                                                                 a                         6:'adverbials'})
     ie_data = ie_data.replace("None", "")
 
     que = []
